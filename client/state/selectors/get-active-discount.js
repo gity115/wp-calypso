@@ -3,7 +3,7 @@
 /**
  * External dependencies
  */
-import { isArray, isPlainObject, map, some } from 'lodash';
+import _ from 'lodash';
 
 /**
  * Internal dependencies
@@ -29,19 +29,19 @@ export const isDiscountActive = ( discount, state ) => {
 		return false;
 	}
 
-	if ( isPlainObject( discount.targetPlan ) ) {
+	if ( _.isPlainObject( discount.targetPlan ) ) {
 		const selectedSiteId = getSelectedSiteId( state );
 		const selectedSitePlanSlug = getSitePlanSlug( state, selectedSiteId );
 
 		return planMatches( selectedSitePlanSlug, discount.targetPlan );
 	}
 
-	if ( isArray( discount.targetPlans ) ) {
+	if ( _.isArray( discount.targetPlans ) ) {
 		const selectedSiteId = getSelectedSiteId( state );
 		const selectedSitePlanSlug = getSitePlanSlug( state, selectedSiteId );
 
-		return some(
-			map( discount.targetPlans, criteria => planMatches( selectedSitePlanSlug, criteria ) )
+		return _.some(
+			_.map( discount.targetPlans, criteria => planMatches( selectedSitePlanSlug, criteria ) )
 		);
 	}
 
